@@ -1,0 +1,30 @@
+{
+    "name": "feinerbube",
+    "version": "0.0.0",
+    "description": "",
+    "main": "./src/index.js",
+    "scripts": {
+        "start": "node ./src/index.js",
+        "build": "npx commandkit build",
+        "dev": "npx commandkit dev",
+        "devd": "nodemon --ext js,json,ts ./src/index.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "packageManager": "pnpm@10.6.3",
+    "type": "module",
+    "dependencies": {
+        "@prisma/client": "^6.6.0",
+        "commandkit": "^0.1.10",
+        "discord.js": "^14.18.0",
+        "dotenv": "^16.5.0",
+        "nodemon": "^3.1.9",
+        "prisma": "^6.6.0"
+    },
+    "pnpm": {
+        "onlyBuiltDependencies": [
+            "@prisma/client"
+        ]
+    }
+}
