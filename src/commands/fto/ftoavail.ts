@@ -2,10 +2,9 @@ import axios from "axios";
 import { CommandData, SlashCommandProps } from "commandkit";
 import { EmbedBuilder } from "discord.js";
 import { Message } from "../../../interface/Message";
-import * as CONSTANTS from "../../utils/constants";
 import { CommandOptions } from "commandkit";
 
-const MESSAGE_ENDPOINT = process.env.DISCORD_API_ENDPOINT + `/channels/${CONSTANTS.EVENT_CHANNEL_ID}/messages`;
+const MESSAGE_ENDPOINT = process.env.DISCORD_API_ENDPOINT + `/channels/1168943371981697024/messages`;
 
 export const data: CommandData = {
     name: "fto-avail",
@@ -41,8 +40,8 @@ export async function run({ interaction }: SlashCommandProps) {
         }
     );
 
-    if (response.status !== 200 || 201) {
-        console.error("Error sending message:", response.statusText);
+    if (![200, 201, 204].includes(response.status)) {
+        console.error("Error sending message:", response.status, response.statusText);
         throw new Error(`Failed to send message: ${response.statusText}`);
     }
 
@@ -57,4 +56,3 @@ export const options: CommandOptions = {
     botPermissions: ["Administrator"],
     deleted: false
 };
-
