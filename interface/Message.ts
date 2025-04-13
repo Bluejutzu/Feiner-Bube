@@ -1,36 +1,36 @@
 import { Embed, GuildMember, MessageAttachment, User } from "discord-types/general";
 
 interface Message {
-    guild_id: string,
-    attachments: MessageAttachment[],
-    author: User,
-    channel_id: string,
-    components: any[],
-    content: string,
-    edited_timestamp: string,
-    embeds: Embed[],
-    sticker_items?: Sticker[],
-    flags: number,
-    id: string,
-    member: GuildMember,
-    mention_everyone: boolean,
-    mention_roles: string[],
-    mentions: Mention[],
-    nonce: string,
-    pinned: false,
-    referenced_message: any,
-    timestamp: string,
-    tts: boolean,
+    guild_id: string;
+    attachments: MessageAttachment[];
+    author: User;
+    channel_id: string;
+    components: any[];
+    content: string;
+    edited_timestamp: string;
+    embeds: Embed[];
+    sticker_items?: Sticker[];
+    flags: number;
+    id: string;
+    member: GuildMember;
+    mention_everyone: boolean;
+    mention_roles: string[];
+    mentions: Mention[];
+    nonce: string;
+    pinned: false;
+    referenced_message: any;
+    timestamp: string;
+    tts: boolean;
     type: number;
 }
 
 interface Mention {
-    avatar: string,
-    avatar_decoration_data: any,
-    discriminator: string,
-    global_name: string,
-    id: string,
-    public_flags: number,
+    avatar: string;
+    avatar_decoration_data: any;
+    discriminator: string;
+    global_name: string;
+    id: string;
+    public_flags: number;
     username: string;
 }
 
@@ -44,5 +44,6 @@ interface Sticker {
     tags: string;
     type: number;
 }
+/* https://github.com/Vendicated/Vencord/blob/main/src/plugins/xsOverlay/index.tsx */
 
 export { Message, Mention, Sticker };

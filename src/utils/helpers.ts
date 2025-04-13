@@ -2,8 +2,6 @@ import axios from "axios";
 import { EmojiIdentifierResolvable, Snowflake } from "discord.js";
 import { Message } from "../../interface/Message";
 
-type ReactionInput = EmojiIdentifierResolvable | EmojiIdentifierResolvable[];
-
 const encodeEmoji = (emoji: EmojiIdentifierResolvable): string => {
     if (typeof emoji === "object" && "id" in emoji) {
         return emoji.id ? `${emoji.animated ? "a" : ""}:${emoji.name}:${emoji.id}` : emoji.name!;
@@ -12,7 +10,11 @@ const encodeEmoji = (emoji: EmojiIdentifierResolvable): string => {
     return emoji.toString();
 };
 
-const addReaction = async (channelId: Snowflake, message: Message, reactions: ReactionInput): Promise<void> => {
+const addReaction = async (
+    channelId: Snowflake,
+    message: Message,
+    reactions: EmojiIdentifierResolvable | EmojiIdentifierResolvable[]
+): Promise<void> => {
     const reactionList = Array.isArray(reactions) ? reactions : [reactions];
 
     for (const emoji of reactionList) {
@@ -26,6 +28,8 @@ const addReaction = async (channelId: Snowflake, message: Message, reactions: Re
                 Authorization: `Bot ${process.env.TOKEN}`
             }
         });
+
+        await new Promise(_ => setTimeout(() => {}, 10));
     }
 };
 

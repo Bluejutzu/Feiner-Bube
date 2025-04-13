@@ -57,6 +57,11 @@ const sendAnnouncement = async (embed: EmbedBuilder): Promise<Message> => {
         }
     );
 
+    if (response.status !== 200 || 201) {
+        console.error("Error sending message:", response.statusText);
+        throw new Error(`Failed to send message: ${response.statusText}`);
+    }
+
     return response.data as Message;
 };
 
@@ -96,8 +101,8 @@ export async function run({ interaction }: SlashCommandProps) {
             throw new Error("Failed to send message");
         }
 
-        await addReaction(CONSTANTS.EVENT_CHANNEL_ID, message, "✅" );
-        
+        await addReaction(CONSTANTS.EVENT_CHANNEL_ID, message, "✅");
+
         await msg.resource?.message?.edit({
             content:
                 `Successfully sent [Announcement](${msg.resource?.message?.url})!\n` +
