@@ -21,22 +21,26 @@ const addReaction = async (params: Reaction): Promise<void> => {
     const reactionList = Array.isArray(reactions) ? reactions : [reactions];
 
     for (const emoji of reactionList) {
-        const rawEmoji = encodeEmoji(emoji);
-        const encoded = encodeURIComponent(rawEmoji);
+        if ("resource" in message && message.resource?.message) {
+            await message.resource.message.react(emoji);
+        } else {
+            // Handle Message using API call
+            const rawEmoji = encodeEmoji(emoji);
+            const encoded = encodeURIComponent(rawEmoji);
 
-        if (!('id' in message)) {
-            throw new Error('Message object does not have an id property');
+            if (!("id" in message)) {
+                throw new Error("Message object does not have an id property");
+            }
+
+            const reactEndpoint = `${process.env.DISCORD_API_ENDPOINT}/channels/${channelId}/messages/${message.id}/reactions/${encoded}/%40me`;
+
+            await axios.put(reactEndpoint, null, {
+                headers: {
+                    Authorization: `Bot ${process.env.TOKEN}`
+                }
+            });
         }
 
-        const reactEndpoint = `${process.env.DISCORD_API_ENDPOINT}/channels/${channelId}/messages/${message.id}/reactions/${encoded}/%40me`;
-
-        await axios.put(reactEndpoint, null, {
-            headers: {
-                Authorization: `Bot ${process.env.TOKEN}`
-            }
-        });
-
-        // Add proper delay using Promise
         await new Promise(resolve => setTimeout(resolve, 10));
     }
 };
