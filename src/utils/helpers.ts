@@ -24,7 +24,6 @@ const addReaction = async (params: Reaction): Promise<void> => {
         if ("resource" in message && message.resource?.message) {
             await message.resource.message.react(emoji);
         } else {
-            // Handle Message using API call
             const rawEmoji = encodeEmoji(emoji);
             const encoded = encodeURIComponent(rawEmoji);
 
