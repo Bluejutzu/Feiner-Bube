@@ -1,5 +1,5 @@
 import axios from "axios";
-import { EmojiIdentifierResolvable, Snowflake } from "discord.js";
+import { EmojiIdentifierResolvable, InteractionCallback, InteractionCallbackResponse, Snowflake } from "discord.js";
 import { Message } from "../../interface/Message";
 
 const encodeEmoji = (emoji: EmojiIdentifierResolvable): string => {
@@ -10,16 +10,23 @@ const encodeEmoji = (emoji: EmojiIdentifierResolvable): string => {
     return emoji.toString();
 };
 
-const addReaction = async (
-    channelId: Snowflake,
-    message: Message,
-    reactions: EmojiIdentifierResolvable | EmojiIdentifierResolvable[]
-): Promise<void> => {
+interface Reaction {
+    channelId: Snowflake;
+    message: Message | InteractionCallbackResponse | InteractionCallback;
+    reactions: EmojiIdentifierResolvable | EmojiIdentifierResolvable[];
+}
+
+const addReaction = async (params: Reaction): Promise<void> => {
+    const { channelId, message, reactions } = params;
     const reactionList = Array.isArray(reactions) ? reactions : [reactions];
 
     for (const emoji of reactionList) {
         const rawEmoji = encodeEmoji(emoji);
         const encoded = encodeURIComponent(rawEmoji);
+
+        if (!('id' in message)) {
+            throw new Error('Message object does not have an id property');
+        }
 
         const reactEndpoint = `${process.env.DISCORD_API_ENDPOINT}/channels/${channelId}/messages/${message.id}/reactions/${encoded}/%40me`;
 
@@ -29,7 +36,8 @@ const addReaction = async (
             }
         });
 
-        await new Promise(_ => setTimeout(() => {}, 10));
+        // Add proper delay using Promise
+        await new Promise(resolve => setTimeout(resolve, 10));
     }
 };
 

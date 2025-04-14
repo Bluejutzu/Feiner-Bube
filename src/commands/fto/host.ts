@@ -101,7 +101,11 @@ export async function run({ interaction }: SlashCommandProps) {
             throw new Error("Failed to send message");
         }
 
-        await addReaction(CONSTANTS.EVENT_CHANNEL_ID, message, "✅");
+        await addReaction({
+            channelId: message.channel_id,
+            message: message,
+            reactions: []
+        });
 
         await msg.resource?.message?.edit({
             content:
