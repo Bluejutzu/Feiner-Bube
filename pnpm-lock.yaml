@@ -26,12 +26,6 @@ importers:
       dotenv:
         specifier: ^16.5.0
         version: 16.5.0
-      nodemon:
-        specifier: ^3.1.9
-        version: 3.1.9
-      prisma:
-        specifier: ^6.6.0
-        version: 6.6.0(typescript@5.8.3)
     devDependencies:
       '@eslint/js':
         specifier: ^9.24.0
@@ -57,9 +51,15 @@ importers:
       eslint-plugin-simple-import-sort:
         specifier: ^12.1.1
         version: 12.1.1(eslint@9.24.0)
+      nodemon:
+        specifier: ^3.1.9
+        version: 3.1.9
       prettier:
         specifier: ^3.5.3
         version: 3.5.3
+      prisma:
+        specifier: ^6.6.0
+        version: 6.6.0(typescript@5.8.3)
       typescript-eslint:
         specifier: ^8.30.1
         version: 8.30.1(eslint@9.24.0)(typescript@5.8.3)

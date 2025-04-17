@@ -4,9 +4,11 @@ import tseslint from "typescript-eslint";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
 
 export default tseslint.config(
+    { ignores: ["node_modules", "dist", "prisma", "db", "interface", ".commandkit", "/**/*.{js,jsx}"] },
     {
-        files: ["src/**/*.{js,jsx,ts,tsx}", "interface/**/*.{js,jsx,ts,tsx}"],
-        ignores: ["**/node_modules/**", "**/dist/**", "**/build/**", "**/prisma/**"],
+        ignores: ["node_modules", "dist", "prisma", "db", "/**/*.{js,jsx}"],
+
+        files: ["/src/**/*.{js,jsx,ts,tsx}", "/interface/**/*.{js,jsx,ts,tsx}"],
         plugins: {
             "@stylistic": stylistic,
             "simple-import-sort": simpleImportSort,

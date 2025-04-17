@@ -86,7 +86,8 @@ export async function run({ interaction }: SlashCommandProps) {
         const grammar = interaction.options.getInteger("grammar-score", true);
         const total = interaction.options.getInteger("total-score", true);
 
-        raLogCache.set(`${interaction.user.id}_${new Date().toLocaleDateString("de-DE")}`, {
+        const cacheKey = `${interaction.user.id}_${Date.now()}`;
+        raLogCache.set(cacheKey, {
             recruit: recruit.id,
             passFail,
             driving,
@@ -94,9 +95,7 @@ export async function run({ interaction }: SlashCommandProps) {
             total
         });
 
-        const modal = new ModalBuilder()
-            .setCustomId(`CMD_843837a4-4f84-4415-a38c-cb883fd92653-${interaction.id}`)
-            .setTitle("R/A Logging Results");
+        const modal = new ModalBuilder().setCustomId(cacheKey).setTitle("R/A Logging Results");
 
         const performance = new TextInputBuilder()
             .setCustomId("performance")

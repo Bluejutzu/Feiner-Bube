@@ -6,14 +6,21 @@ import { raLogCache } from "../../../commands/RideAlong/ra.js";
 export default async function (interaction: BaseInteraction) {
     if (!interaction.isModalSubmit()) return;
 
-    const todayLocal = new Date().toLocaleDateString("de-DE");
-    const cacheKeyLocal = `${interaction.user.id}_${todayLocal}`;
-    console.log(cacheKeyLocal, raLogCache.keys());
-    const cached = raLogCache.get(cacheKeyLocal);
+    const modalIdPattern = /^(\d{17,20}_\d{10,})$/;
+    const match = interaction.customId.match(modalIdPattern);
+    if (!match || match[1] === undefined) {
+        return interaction.reply({
+            content: "This session has expired or data was not found.",
+            flags: ["Ephemeral"]
+        });
+    }
+
+    const cacheKey = match[1];
+    const cached = raLogCache.get(cacheKey);
 
     if (!cached) {
         return interaction.reply({
-            content: `This session has expired or data was not found, ${cacheKeyLocal}.`,
+            content: `This session has expired or data was not found, ${cacheKey}.`,
             flags: ["Ephemeral"]
         });
     }
@@ -48,11 +55,11 @@ export default async function (interaction: BaseInteraction) {
     if (cached.passFail === "pass") {
         const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
             new ButtonBuilder()
-                .setCustomId("approve_promotion")
+                .setCustomId(`approve_promotion:${cacheKey}`)
                 .setLabel("Approve Promotion")
                 .setStyle(ButtonStyle.Success),
             new ButtonBuilder()
-                .setCustomId("reject_promotion")
+                .setCustomId(`reject_promotion:${cacheKey}`)
                 .setLabel("Reject Promotion")
                 .setStyle(ButtonStyle.Danger)
         );

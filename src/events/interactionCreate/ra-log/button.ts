@@ -6,18 +6,29 @@ import { raLogCache } from "../../../commands/RideAlong/ra.js";
 export default async function (interaction: BaseInteraction) {
     if (!interaction.isButton()) return;
 
-    if (interaction.customId !== "approve_promotion" && interaction.customId !== "reject_promotion") return;
+    const buttonIdPattern = /^(approve_promotion|reject_promotion):(\d{17,20}_\d{10,})$/;
+    const match = interaction.customId.match(buttonIdPattern);
+
+    if (!match || match[1] === undefined || match[2] === undefined) {
+        return interaction.reply({
+            content: `This session has expired or the button is invalid, ${interaction.customId}`,
+            ephemeral: true
+        });
+    }
+
+    const [, action, cacheKey] = match;
 
     const oldEmbed = interaction.message.embeds[0];
-    if (oldEmbed === undefined) {
+    if (!oldEmbed) {
         return interaction.reply({
             content: "This session has expired or data was not found.",
             ephemeral: true
         });
     }
+
     const embed = EmbedBuilder.from(oldEmbed);
 
-    if (interaction.customId === "approve_promotion") {
+    if (action === "approve_promotion") {
         embed
             .setAuthor({ name: "Status: Approved" })
             .setColor("Green")
@@ -29,10 +40,7 @@ export default async function (interaction: BaseInteraction) {
             .spliceFields(0, 1, { name: "Pass/Fail", value: "Rejected" });
     }
 
-    const todayLocal = new Date().toLocaleDateString("de-DE");
-    const cacheKeyLocal = `${interaction.user.id}_${todayLocal}`;
-
-    raLogCache.delete(cacheKeyLocal);
+    raLogCache.delete(cacheKey);
 
     return await interaction.update({
         embeds: [embed],

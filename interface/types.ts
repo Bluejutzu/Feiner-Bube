@@ -1,8 +1,8 @@
-import type { Embed, GuildMember, MessageAttachment } from "discord-types/general";
+import type { Embed, GuildMember, MessageEditAttachmentData } from "discord.js";
 
 interface Message {
     guild_id: string;
-    attachments: MessageAttachment[];
+    attachments: MessageEditAttachmentData[];
     author: User;
     channel_id: string;
     components: any[];

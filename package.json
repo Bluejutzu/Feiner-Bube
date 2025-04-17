@@ -8,8 +8,8 @@
         "build": "npx commandkit build",
         "dev": "npx commandkit dev",
         "devd": "nodemon --ext js,json,ts ./src/index.js",
-        "lint": "eslint ./src --ext .ts",
-        "lint:fix": "eslint ./src --ext .ts --fix",
+        "lint": "eslint",
+        "lint:fix": "pnpm lint --fix",
         "format": "prettier --write \"src/**/*.ts\""
     },
     "keywords": [],
@@ -23,9 +23,7 @@
         "commandkit": "^0.1.10",
         "discord-types": "^1.3.3",
         "discord.js": "^14.18.0",
-        "dotenv": "^16.5.0",
-        "nodemon": "^3.1.9",
-        "prisma": "^6.6.0"
+        "dotenv": "^16.5.0"
     },
     "pnpm": {
         "onlyBuiltDependencies": [
@@ -41,7 +39,9 @@
         "eslint-plugin-import": "^2.31.0",
         "eslint-plugin-prettier": "^5.2.6",
         "eslint-plugin-simple-import-sort": "^12.1.1",
+        "nodemon": "^3.1.9",
         "prettier": "^3.5.3",
+        "prisma": "^6.6.0",
         "typescript-eslint": "^8.30.1"
     }
 }
