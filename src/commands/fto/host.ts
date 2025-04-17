@@ -4,9 +4,9 @@ import axios from "axios";
 import type { CommandData, CommandOptions, SlashCommandProps } from "commandkit";
 import { EmbedBuilder } from "discord.js";
 
-import type { Message } from "../../../interface/types";
-import * as CONSTANTS from "../../utils/constants";
-import { addReaction } from "../../utils/helpers";
+import type { Message } from "../../../interface/types.js";
+import * as CONSTANTS from "../../utils/constants.js";
+import { addReaction } from "../../utils/helpers.js";
 
 const MESSAGE_ENDPOINT = process.env.DISCORD_API_ENDPOINT + `/channels/${CONSTANTS.EVENT_CHANNEL_ID}/messages`;
 
