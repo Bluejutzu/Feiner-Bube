@@ -1,10 +1,10 @@
-import 'dotenv/config';
+import "dotenv/config";
 
-import { Client, IntentsBitField } from 'discord.js';
-import { CommandKit } from 'commandkit';
+import { dirname as dn } from "node:path";
+import { fileURLToPath } from "node:url";
 
-import { dirname as dn } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { CommandKit } from "commandkit";
+import { Client, IntentsBitField } from "discord.js";
 
 const dirname = dn(fileURLToPath(import.meta.url));
 
@@ -18,6 +18,7 @@ const client = new Client({
 });
 
 new CommandKit({
+    bulkRegister: true,
     client,
     eventsPath: `${dirname}/events`,
     commandsPath: `${dirname}/commands`

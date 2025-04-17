@@ -1,9 +1,11 @@
 import "dotenv/config";
+
+import axios from "axios";
 import type { CommandData, CommandOptions, SlashCommandProps } from "commandkit";
 import { EmbedBuilder } from "discord.js";
-import axios from "axios";
+
+import type { Message } from "../../../interface/types";
 import * as CONSTANTS from "../../utils/constants";
-import { Message } from "../../../interface/Message";
 import { addReaction } from "../../utils/helpers";
 
 const MESSAGE_ENDPOINT = process.env.DISCORD_API_ENDPOINT + `/channels/${CONSTANTS.EVENT_CHANNEL_ID}/messages`;
@@ -27,15 +29,15 @@ const createAnnouncementEmbed = (type: string, user: string): EmbedBuilder => {
     if (type === "training") {
         embed.setDescription(
             `${user} is hosting a Training. If you intend on attending then react below with a checkmark.\n` +
-                `Starting: ()}\n\n` +
-                `Florida State rules apply in the Training Server. Violating any of them or disrupting the Training will result in punishment.`
+                "Starting: ()}\n\n" +
+                "Florida State rules apply in the Training Server. Violating any of them or disrupting the Training will result in punishment."
         );
     } else {
         embed.setDescription(
             `${user} is hosting a Shift! Join up and get a chance for a promotion!\n` +
-                `Starting: {formatTime(new Date())}\n` +
-                `Code: FloridaSTR\n` +
-                `https://discord.com/channels/884071312446873650/1342660852347572234`
+                "Starting: {formatTime(new Date())}\n" +
+                "Code: FloridaSTR\n" +
+                "https://discord.com/channels/884071312446873650/1342660852347572234"
         );
     }
 
@@ -57,7 +59,7 @@ const sendAnnouncement = async (embed: EmbedBuilder): Promise<Message> => {
         }
     );
 
-    if (response.status !== 200 || 201) {
+    if (![200, 201, 204].includes(response.status)) {
         console.error("Error sending message:", response.statusText);
         throw new Error(`Failed to send message: ${response.statusText}`);
     }

@@ -1,10 +1,9 @@
 import axios from "axios";
-import { CommandData, SlashCommandProps } from "commandkit";
+import type { CommandData, SlashCommandProps } from "commandkit";
+import type { CommandOptions } from "commandkit";
 import { EmbedBuilder } from "discord.js";
-import { Message } from "../../../interface/Message";
-import { CommandOptions } from "commandkit";
 
-const MESSAGE_ENDPOINT = process.env.DISCORD_API_ENDPOINT + `/channels/1168943371981697024/messages`;
+const MESSAGE_ENDPOINT = process.env.DISCORD_API_ENDPOINT + "/channels/1168943371981697024/messages";
 
 export const data: CommandData = {
     name: "fto-avail",
@@ -45,7 +44,6 @@ export async function run({ interaction }: SlashCommandProps) {
         throw new Error(`Failed to send message: ${response.statusText}`);
     }
 
-    response.data as Message;
     await msg.resource?.message?.edit({
         content: `[Embed](${msg.resource.message.url}) sent`
     });

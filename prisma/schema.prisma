@@ -1,11 +1,31 @@
 datasource db {
-  provider  = "postgresql"
-  url  	    = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
   // uncomment next line if you use Prisma <5.10
   // directUrl = env("DATABASE_URL_UNPOOLED")
 }
 
 generator client {
   provider = "prisma-client-js"
+  output   = "../prisma/generated"
 }
-   
+
+model User {
+  id                     String   @id @unique
+  username               String
+  discriminator          String
+  global_name            String?
+  avatar                 String?
+  bot                    Boolean?
+  system                 Boolean?
+  mfa_enabled            Boolean?
+  banner                 String?
+  accent_color           Int?
+  locale                 String?
+  verified               Boolean?
+  email                  String?
+  flags                  Int?
+  premium_type           Int?
+  public_flags           Int?
+  avatar_decoration_data Json?
+}

@@ -1,6 +1,12 @@
 import axios from "axios";
-import { EmojiIdentifierResolvable, InteractionCallback, InteractionCallbackResponse, Snowflake } from "discord.js";
-import { Message } from "../../interface/Message";
+import type {
+    EmojiIdentifierResolvable,
+    InteractionCallback,
+    InteractionCallbackResponse,
+    Snowflake
+} from "discord.js";
+
+import type { Message } from "../../interface/types.js";
 
 const encodeEmoji = (emoji: EmojiIdentifierResolvable): string => {
     if (typeof emoji === "object" && "id" in emoji) {

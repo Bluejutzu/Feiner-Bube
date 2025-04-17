@@ -7,12 +7,15 @@
         "start": "node ./src/index.js",
         "build": "npx commandkit build",
         "dev": "npx commandkit dev",
-        "devd": "nodemon --ext js,json,ts ./src/index.js"
+        "devd": "nodemon --ext js,json,ts ./src/index.js",
+        "lint": "eslint ./src --ext .ts",
+        "lint:fix": "eslint ./src --ext .ts --fix",
+        "format": "prettier --write \"src/**/*.ts\""
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
-    "packageManager": "pnpm@10.6.3",
+    "packageManager": "pnpm@10.8.1",
     "type": "module",
     "dependencies": {
         "@prisma/client": "^6.6.0",
@@ -28,5 +31,17 @@
         "onlyBuiltDependencies": [
             "@prisma/client"
         ]
+    },
+    "devDependencies": {
+        "@eslint/js": "^9.24.0",
+        "@stylistic/eslint-plugin": "^4.2.0",
+        "@types/node": "^22.14.1",
+        "eslint": "^9.24.0",
+        "eslint-config-prettier": "^10.1.2",
+        "eslint-plugin-import": "^2.31.0",
+        "eslint-plugin-prettier": "^5.2.6",
+        "eslint-plugin-simple-import-sort": "^12.1.1",
+        "prettier": "^3.5.3",
+        "typescript-eslint": "^8.30.1"
     }
 }
