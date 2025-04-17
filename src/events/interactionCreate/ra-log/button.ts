@@ -1,5 +1,7 @@
-import type { BaseInteraction} from "discord.js";
+import type { BaseInteraction } from "discord.js";
 import { EmbedBuilder } from "discord.js";
+
+import { raLogCache } from "../../../commands/RideAlong/ra.js";
 
 export default async function (interaction: BaseInteraction) {
     if (!interaction.isButton()) return;
@@ -26,6 +28,11 @@ export default async function (interaction: BaseInteraction) {
             .setColor("Red")
             .spliceFields(0, 1, { name: "Pass/Fail", value: "Rejected" });
     }
+
+    const todayLocal = new Date().toLocaleDateString("de-DE");
+    const cacheKeyLocal = `${interaction.user.id}_${todayLocal}`;
+
+    raLogCache.delete(cacheKeyLocal);
 
     return await interaction.update({
         embeds: [embed],
