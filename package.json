@@ -8,7 +8,7 @@
         "build": "npx commandkit build",
         "dev": "npx commandkit dev",
         "devd": "nodemon --ext js,json,ts ./src/index.js",
-        "lint": "eslint",
+        "lint": "eslint --config eslint.config.js",
         "lint:fix": "pnpm lint --fix",
         "format": "prettier --write \"src/**/*.ts\""
     },
@@ -39,6 +39,7 @@
         "eslint-plugin-import": "^2.31.0",
         "eslint-plugin-prettier": "^5.2.6",
         "eslint-plugin-simple-import-sort": "^12.1.1",
+        "globals": "^16.0.0",
         "nodemon": "^3.1.9",
         "prettier": "^3.5.3",
         "prisma": "^6.6.0",

@@ -1,8 +1,9 @@
-import { ActionRowBuilder, ButtonBuilder, ModalSubmitInteraction } from "discord.js";
+import type { ModalSubmitInteraction } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder } from "discord.js";
 import { ButtonStyle, EmbedBuilder } from "discord.js";
 
-import { raLogCache } from "../../../commands/RideAlong/ra.js";
 import type { RaLogCacheData } from "../../../../interface/types.js";
+import { raLogCache } from "../../../commands/RideAlong/ra.js";
 
 export default async function (interaction: ModalSubmitInteraction) {
     const modalIdPattern = /^(\d{17,20}_\d{10,})$/;

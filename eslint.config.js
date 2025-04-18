@@ -1,4 +1,3 @@
-/* https://github.com/Vendicated/Vencord/blob/main/eslint.config.mjs */
 import stylistic from "@stylistic/eslint-plugin";
 import tseslint from "typescript-eslint";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
@@ -6,9 +5,9 @@ import simpleImportSort from "eslint-plugin-simple-import-sort";
 export default tseslint.config(
     { ignores: ["node_modules", "dist", "prisma", "db", "interface", ".commandkit", "/**/*.{js,jsx}"] },
     {
-        ignores: ["node_modules", "dist", "prisma", "db", "/**/*.{js,jsx}"],
+        ignores: ["node_modules", "dist", "prisma", "db", "interface", ".commandkit", "/**/*.{js,jsx}"],
 
-        files: ["/src/**/*.{js,jsx,ts,tsx}", "/interface/**/*.{js,jsx,ts,tsx}"],
+        files: ["src/**/*.{js,jsx,ts,tsx}", "interface/**/*.{js,jsx,ts,tsx}"],
         plugins: {
             "@stylistic": stylistic,
             "simple-import-sort": simpleImportSort,
