@@ -66,4 +66,13 @@ interface User {
     avatar_decoration_data?: any;
 }
 
-export { Mention, Message, Sticker, User };
+interface RaLogCacheData {
+    recruit: string;
+    passFail: "pass" | "fail";
+    driving: number;
+    grammar: number;
+    total: number;
+    callsign?: string;
+}
+
+export { Mention, Message, RaLogCacheData, Sticker, User };

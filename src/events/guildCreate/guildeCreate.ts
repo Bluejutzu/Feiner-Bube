@@ -1,6 +1,13 @@
-import type { Guild } from "discord.js";
+import type { Client, Guild } from "discord.js";
 
-export default function (g: Guild) {
-    console.log(`Joined a new guild ${g.name} (${g.id})`);
-    console.log(`Guild owner: ${g.members.me?.user.tag} (${g.members.me?.user.id})`);
+export default async function (guild: Guild, client: Client<true>) {
+    try {
+        console.log(`Joined guild: ${guild.name} (${guild.id})`);
+        console.log(`Now in ${client.guilds.cache.size} guilds`);
+
+        const owner = await guild.fetchOwner();
+        console.log(`Guild owner: ${owner.user.tag} (${owner.id})`);
+    } catch (error) {
+        console.error(`Error handling guild create event for guild ${guild.id}:`, error);
+    }
 }

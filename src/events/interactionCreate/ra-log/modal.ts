@@ -1,27 +1,26 @@
-import type { BaseInteraction } from "discord.js";
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ModalSubmitInteraction } from "discord.js";
+import { ButtonStyle, EmbedBuilder } from "discord.js";
 
 import { raLogCache } from "../../../commands/RideAlong/ra.js";
+import type { RaLogCacheData } from "../../../../interface/types.js";
 
-export default async function (interaction: BaseInteraction) {
-    if (!interaction.isModalSubmit()) return;
-
+export default async function (interaction: ModalSubmitInteraction) {
     const modalIdPattern = /^(\d{17,20}_\d{10,})$/;
     const match = interaction.customId.match(modalIdPattern);
     if (!match || match[1] === undefined) {
         return interaction.reply({
             content: "This session has expired or data was not found.",
-            flags: ["Ephemeral"]
+            ephemeral: true
         });
     }
 
     const cacheKey = match[1];
-    const cached = raLogCache.get(cacheKey);
+    const cached = raLogCache.get(cacheKey) as RaLogCacheData | undefined;
 
     if (!cached) {
         return interaction.reply({
             content: `This session has expired or data was not found, ${cacheKey}.`,
-            flags: ["Ephemeral"]
+            ephemeral: true
         });
     }
 
@@ -37,21 +36,21 @@ export default async function (interaction: BaseInteraction) {
         .setColor(cached.passFail === "fail" ? "Red" : "Blue")
         .setDescription(
             `
-  **Pass/Fail:** ${cached.passFail}
-  **Recruit:** ${cached.recruit}
-  **Overall Score:** ${cached.total}
-  **Driving:** ${cached.driving}
-  **Grammar:** ${cached.grammar}
-  **Field‐Officer:** ${interaction.user}
-  **Performance Notes:** ${performance}
-  **Additional Notes:** ${notes}
-  
-  Time logged: ${new Date().toLocaleString()}
-  Awaiting decision by a High‐Ranking member or FTO Supervisor.
-      `.trim()
+**Pass/Fail:** ${cached.passFail}
+**Recruit:** <@${cached.recruit}>
+**Overall Score:** ${cached.total}
+**Driving:** ${cached.driving}
+**Grammar:** ${cached.grammar}
+**Field‐Officer:** ${interaction.user}
+**Performance Notes:** ${performance}
+**Additional Notes:** ${notes}
+
+Time logged: ${new Date().toLocaleString()}
+Awaiting decision by a High‐Ranking member or FTO Supervisor.
+            `.trim()
         );
 
-    const components = [];
+    const components: ActionRowBuilder<ButtonBuilder>[] = [];
     if (cached.passFail === "pass") {
         const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
             new ButtonBuilder()

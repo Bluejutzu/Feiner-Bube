@@ -6,18 +6,9 @@ import {
     TextInputBuilder,
     TextInputStyle
 } from "discord.js";
+import type { RaLogCacheData } from "../../../interface/types.js"; 
 
-export const raLogCache = new Map<
-    string,
-    {
-        recruit: string;
-        passFail: string;
-        driving: number;
-        grammar: number;
-        total: number;
-        callsign?: string;
-    }
->();
+export const raLogCache = new Map<string, RaLogCacheData>();
 
 export const data: CommandData = {
     name: "ra",
@@ -81,7 +72,7 @@ export async function run({ interaction }: SlashCommandProps) {
 
     if (sub === "log") {
         const recruit = interaction.options.getUser("recruit", true);
-        const passFail = interaction.options.getString("pass-fail", true);
+        const passFail = interaction.options.getString("pass-fail", true) as "pass" | "fail";
         const driving = interaction.options.getInteger("driving-score", true);
         const grammar = interaction.options.getInteger("grammar-score", true);
         const total = interaction.options.getInteger("total-score", true);
